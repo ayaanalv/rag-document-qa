@@ -14,9 +14,9 @@ This means the model can only answer using what's actually in your documents. It
 ## Tech stack
 
 - **Python 3**
-- **[Ollama](https://ollama.com)** — runs both the embedding model (`nomic-embed-text`) and the chat model (`llama3.2`) locally
-- **pypdf** — extracts text from PDF files
-- **numpy** — computes cosine similarity between embedding vectors
+- **[Ollama](https://ollama.com):** runs both the embedding model (`nomic-embed-text`) and the chat model (`llama3.2`) locally
+- **pypdf:** extracts text from PDF files
+- **numpy:** computes cosine similarity between embedding vectors
 
 ## How it works
 
