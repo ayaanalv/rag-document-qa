@@ -9,7 +9,7 @@ Point it at a folder of PDFs, ask a question in plain English, and it:
 2. Hands only those relevant sections to a local LLM
 3. Returns an answer grounded in the actual document content, with source attribution per chunk
 
-This means the model can only answer using what's actually in your documents — it won't make things up from its own training data, and it will say so if the answer isn't present.
+This means the model can only answer using what's actually in your documents. It won't make things up from its own training data, and it will say so if the answer isn't present.
 
 ## Tech stack
 
@@ -20,10 +20,10 @@ This means the model can only answer using what's actually in your documents —
 
 ## How it works
 
-1. **Chunking** — each PDF is split into overlapping ~1000-character chunks, so related content doesn't get cut off mid-thought at chunk boundaries
-2. **Embedding** — every chunk is converted into a vector using `nomic-embed-text`, capturing semantic meaning rather than exact word matches
-3. **Retrieval** — when a question comes in, it's embedded the same way, and compared against every chunk via cosine similarity; the top 5 most relevant chunks are selected
-4. **Generation** — the question and retrieved chunks are passed to `llama3.2`, which is instructed to answer using only that context
+1. **Chunking:** each PDF is split into overlapping ~1000-character chunks, so related content doesn't get cut off mid-thought at chunk boundaries
+2. **Embedding:** every chunk is converted into a vector using `nomic-embed-text`, capturing semantic meaning rather than exact word matches
+3. **Retrieval:** — when a question comes in, it's embedded the same way, and compared against every chunk via cosine similarity; the top 5 most relevant chunks are selected
+4. **Generation:** the question and retrieved chunks are passed to `llama3.2`, which is instructed to answer using only that context
 
 ## Setup
 
