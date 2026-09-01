@@ -75,4 +75,4 @@ rag-document-qa/
 
 ## Background
 
-Built to explore retrieval-augmented generation and local LLM tooling, motivated by internship postings requiring hands-on RAG/GenAI experience.
+Built to gain hands-on experience with retrieval-augmented generation and local LLM tooling.
