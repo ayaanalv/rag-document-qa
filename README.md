@@ -22,7 +22,7 @@ This means the model can only answer using what's actually in your documents. It
 
 1. **Chunking:** each PDF is split into overlapping ~1000-character chunks, so related content doesn't get cut off mid-thought at chunk boundaries
 2. **Embedding:** every chunk is converted into a vector using `nomic-embed-text`, capturing semantic meaning rather than exact word matches
-3. **Retrieval:** — when a question comes in, it's embedded the same way, and compared against every chunk via cosine similarity; the top 5 most relevant chunks are selected
+3. **Retrieval:** when a question comes in, it's embedded the same way, and compared against every chunk via cosine similarity; the top 5 most relevant chunks are selected
 4. **Generation:** the question and retrieved chunks are passed to `llama3.2`, which is instructed to answer using only that context
 
 ## Setup
