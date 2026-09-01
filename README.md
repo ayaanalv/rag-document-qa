@@ -1,6 +1,6 @@
 # RAG Document Q&A
 
-A retrieval-augmented generation (RAG) pipeline that answers natural-language questions about PDF documents, using a fully local LLM stack via [Ollama](https://ollama.com) — no API keys, no cloud costs.
+A retrieval-augmented generation (RAG) pipeline that answers natural-language questions about PDF documents, using a fully local LLM stack via [Ollama](https://ollama.com) - no API keys, no cloud costs.
 
 ## What it does
 
