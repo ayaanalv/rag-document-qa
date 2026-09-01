@@ -3,14 +3,15 @@ RAG pipeline that reads real PDFs from a folder, instead of hardcoded chunks.
 Run this on YOUR machine with Ollama running.
 """
 import os
+import numpy as np
 from pypdf import PdfReader
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import ollama
 
+EMBED_MODEL = "nomic-embed-text"   # a small, free local embedding model
+
 DOCS_FOLDER = "documents"   # put your PDFs in a folder with this name
-CHUNK_SIZE = 500            # characters per chunk
-CHUNK_OVERLAP = 50          # characters shared between consecutive chunks
+CHUNK_SIZE = 1000           # characters per chunk (larger = more complete sections per chunk)
+CHUNK_OVERLAP = 100         # characters shared between consecutive chunks
 
 # ---- PHASE 1: SETUP ----
 
@@ -53,12 +54,21 @@ if not chunks:
 
 print(f"Loaded {len(chunks)} chunks from PDFs in '{DOCS_FOLDER}/'\n")
 
-vectorizer = TfidfVectorizer()
-chunk_vectors = vectorizer.fit_transform(chunks)
+def embed(text):
+    """Turn text into a real semantic embedding vector using a local model."""
+    response = ollama.embed(model=EMBED_MODEL, input=text)
+    return np.array(response["embeddings"][0])
 
-def retrieve(question, top_k=3):
-    question_vector = vectorizer.transform([question])
-    scores = cosine_similarity(question_vector, chunk_vectors)[0]
+def cosine_similarity(a, b):
+    """How similar two vectors are, from -1 (opposite) to 1 (identical)."""
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+print("Embedding chunks (this may take a moment the first time)...")
+chunk_vectors = [embed(c) for c in chunks]
+
+def retrieve(question, top_k=5):
+    question_vector = embed(question)
+    scores = [cosine_similarity(question_vector, cv) for cv in chunk_vectors]
     ranked = sorted(zip(scores, chunk_records), reverse=True, key=lambda x: x[0])
     return [record for score, record in ranked[:top_k]]
 
